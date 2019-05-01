@@ -1,0 +1,31 @@
+resources:
+- name: src-repo
+  type: git
+  source:
+    branch: master
+    private_key: ((git-repo.ssh_key))
+    uri: ((git-repo.mirror1_uri))/SRMIC/bkd-quarkus.git
+  check_every: 5m
+- name: nuxeo-studio-resource-image-rc-alpine
+  type: docker-image
+  source:
+    repository: ((docker-registry.repo))/bkd-quarkus
+    username: ((docker-registry.username))
+    password: ((docker-registry.password))
+
+jobs:
+- name: build-native-docker
+  public: true
+  serial_groups:
+  plan:
+  - aggregate:
+    - get: src-repo
+      trigger: true
+    - get: concourse-ci-repo
+  - task: build-native-jar
+    file: src-repo/ci/build-native-jar.yml
+  - put: docker
+    params:
+      build: src-repo
+      dockerfile: src-repo/main/docker/Dockerfile.concourse
+      tag_as_latest: false
