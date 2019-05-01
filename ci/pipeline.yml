@@ -2,7 +2,7 @@ resources:
 - name: src-repo
   type: git
   source:
-    branch: master
+    branch: working
     private_key: ((git-repo.ssh_key))
     uri: ((git-repo.mirror1_uri))/SRMIC/bkd-quarkus.git
   check_every: 5m

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-yum update -y
+#yum update -y
 yum install -y maven
 
 cd src-repo
