@@ -1,0 +1,15 @@
+---
+applications:
+- name: quarkus-bkd
+  health-check-http-endpoint: /health
+  health-check-type: http
+  instances: 1
+  routes:
+  - route: quarkus-bkd.apps-dev.gp2.axadmin.net
+  docker:
+    image: harbor-docker-registry-dev.gp2.axadmin.net/identifix_cms/bkd-quarkus:latest
+  env:
+    QUARKUS_DATASOURCE_URL=postgresql://sb_bac29270-1a21-4dc4-a21e-0a704a0aaaed:83T601ZG9wW27duI5L4V@10.233.169.190:5432/sb_c9ce2008-de13-4720-b191-f135358791b4
+    QUARKUS_DATASOURCE_DRIVER=org.postgresql.Driver
+    QUARKUS_DATASOURCE_USERNAME=sb_bac29270-1a21-4dc4-a21e-0a704a0aaaed
+    QUARKUS_DATASOURCE_PASSWORD=83T601ZG9wW27duI5L4V
