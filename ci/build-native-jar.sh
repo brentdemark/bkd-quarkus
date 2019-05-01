@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-yum update
-yum install maven
+yum update -y
+yum install -y maven
 
 cd src-repo
 mvn package -Pnative
