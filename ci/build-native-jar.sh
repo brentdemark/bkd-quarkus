@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
+export GRAALVM_HOME=/opt/graalvm-ce-1.0.0-rc16
+
 # Install Maven
 yum install -y wget
 wget https://www-us.apache.org/dist/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz -P /tmp
