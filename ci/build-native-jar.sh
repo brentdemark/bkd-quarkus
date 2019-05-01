@@ -2,8 +2,8 @@
 set -e
 
 #yum update -y
-yum install -y maven
+#yum install -y maven
 
 cd src-repo
 mvn package -Pnative
-cp target *-runner ../target/
+#cp target *-runner ../target/
