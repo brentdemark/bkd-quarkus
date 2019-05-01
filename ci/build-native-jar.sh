@@ -14,4 +14,4 @@ export PATH=${M2_HOME}/bin:${PATH}
 
 cd src-repo
 mvn package -Pnative
-cp target *-runner ../target/
+cp target/*-runner ../target/
