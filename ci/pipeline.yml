@@ -26,5 +26,5 @@ jobs:
   - put: docker
     params:
       build: src-repo
-      dockerfile: src-repo/main/docker/Dockerfile.concourse
+      dockerfile: src-repo/src/main/docker/Dockerfile.concourse
       tag_as_latest: false
