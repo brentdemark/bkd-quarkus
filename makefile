@@ -23,3 +23,11 @@ run-docker-pcf-postgres: ; docker run -i --rm -p 8080\:8080 \
     --env QUARKUS_DATASOURCE_USERNAME=sb_bac29270-1a21-4dc4-a21e-0a704a0aaaed \
     --env QUARKUS_DATASOURCE_PASSWORD=83T601ZG9wW27duI5L4V \
     harbor-docker-registry-dev.gp2.axadmin.net/identifix_cms/bkd-quarkus\:latest
+
+run-docker-pcf-mariadb: ; docker run -i --rm -p 8080\:8080 \
+    --env GREETING_MESSAGE=stuff \
+    --env QUARKUS_DATASOURCE_DRIVER=org.mariadb.Driver \
+    --env QUARKUS_DATASOURCE_URL=jdbc:mariadb://localhost:63306/cf_0f279ba2_219a_47a2_8a08_c8c9f96cae79 \
+    --env QUARKUS_DATASOURCE_USERNAME=ze0BUbdwfHTRVsVI \
+    --env QUARKUS_DATASOURCE_PASSWORD=h3VL8JqF51QV7Lnm \
+    harbor-docker-registry-dev.gp2.axadmin.net/identifix_cms/bkd-quarkus\:latest
