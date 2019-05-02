@@ -2,6 +2,16 @@ run-h2: ; ./mvnw compile quarkus\:dev \
     -Dquarkus.datasource.url=jdbc\:h2\:mem\:bkd \
     -Dquarkus.datasource.driver=org.h2.Driver
 
+run-native-h2: ; ./target/bkd-quarkus-1.0-SNAPSHOT-runner \
+    -Dquarkus.datasource.url=jdbc\:h2\:mem\:bkd \
+    -Dquarkus.datasource.driver=org.h2.Driver
+
+run-native-postgres: ; ./target/bkd-quarkus-1.0-SNAPSHOT-runner \
+    -Dquarkus.datasource.url=jdbc\:postgresql\://localhost\:5432/bkd \
+    -Dquarkus.datasource.driver=org.postgresql.Driver \
+    -Dquarkus.datasource.username=bkd \
+    -Dquarkus.datasource.password=postgres
+
 run-local-mariadb: ; ./mvnw compile quarkus\:dev \
     -Dquarkus.datasource.url=jdbc:mariadb://localhost:3306/bkd \
     -Dquarkus.datasource.driver=org.mariadb.jdbc.Driver \
