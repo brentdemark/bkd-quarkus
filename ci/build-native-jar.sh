@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-export GRAALVM_HOME=/opt/graalvm-ce-1.0.0-rc16
+export GRAALVM_HOME=/opt/graalvm
 
 # Install Maven
 yum install -y wget
