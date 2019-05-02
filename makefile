@@ -2,11 +2,25 @@ run-h2: ; ./mvnw compile quarkus\:dev \
     -Dquarkus.datasource.url=jdbc\:h2\:mem\:bkd \
     -Dquarkus.datasource.driver=org.h2.Driver
 
+run-local-mariadb: ; ./mvnw compile quarkus\:dev \
+    -Dquarkus.datasource.url=jdbc:mariadb://localhost:3306/bkd \
+    -Dquarkus.datasource.driver=org.mariadb.jdbc.Driver \
+    -Dquarkus.datasource.username=root \
+    -Dquarkus.datasource.password=mariadb
+
 run-local-postgres: ; ./mvnw compile quarkus\:dev \
     -Dquarkus.datasource.url=jdbc\:postgresql\://localhost\:5432/bkd \
     -Dquarkus.datasource.driver=org.postgresql.Driver \
     -Dquarkus.datasource.username=bkd \
     -Dquarkus.datasource.password=postgres
+
+run-docker-local-mariadb: ; docker run -i --rm -p 8080\:8080 \
+    --env GREETING_MESSAGE=stuff \
+    --env QUARKUS_DATASOURCE_DRIVER=org.mariadb.jdbc.Driver \
+    --env QUARKUS_DATASOURCE_URL=jdbc:mariadb://localhost:3306/bkd \
+    --env QUARKUS_DATASOURCE_USERNAME=root \
+    --env QUARKUS_DATASOURCE_PASSWORD=mariadb \
+    harbor-docker-registry-dev.gp2.axadmin.net/identifix_cms/bkd-quarkus\:latest
 
 run-docker-local-postgres: ; docker run -i --rm -p 8080\:8080 \
     --env GREETING_MESSAGE=stuff \
@@ -26,7 +40,7 @@ run-docker-pcf-postgres: ; docker run -i --rm -p 8080\:8080 \
 
 run-docker-pcf-mariadb: ; docker run -i --rm -p 8080\:8080 \
     --env GREETING_MESSAGE=stuff \
-    --env QUARKUS_DATASOURCE_DRIVER=org.mariadb.Driver \
+    --env QUARKUS_DATASOURCE_DRIVER=org.mariadb.jdbc.Driver \
     --env QUARKUS_DATASOURCE_URL=jdbc:mariadb://localhost:63306/cf_0f279ba2_219a_47a2_8a08_c8c9f96cae79 \
     --env QUARKUS_DATASOURCE_USERNAME=ze0BUbdwfHTRVsVI \
     --env QUARKUS_DATASOURCE_PASSWORD=h3VL8JqF51QV7Lnm \
