@@ -25,6 +25,6 @@ jobs:
     file: src-repo/ci/build-native-jar.yml
   - put: docker
     params:
-      build: src-repo
+      build: .
       dockerfile: src-repo/src/main/docker/Dockerfile.concourse
       tag_as_latest: false

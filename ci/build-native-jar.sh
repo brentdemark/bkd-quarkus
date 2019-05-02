@@ -13,5 +13,5 @@ export MAVEN_HOME=/opt/maven
 export PATH=${M2_HOME}/bin:${PATH}
 
 cd src-repo
-mvn package -Pnative
+mvn package -Pnative -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
 cp target/*-runner ../target/
