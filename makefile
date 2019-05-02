@@ -1,6 +1,19 @@
-run-h2: ; ./mvnw compile quarkus\:dev \
+run-dev-h2: ; ./mvnw compile quarkus\:dev \
     -Dquarkus.datasource.url=jdbc\:h2\:mem\:bkd \
     -Dquarkus.datasource.driver=org.h2.Driver
+
+run-dev-postgres: ; ./mvnw compile quarkus\:dev \
+    -Dquarkus.datasource.url=jdbc\:postgresql\://localhost\:5432/bkd \
+    -Dquarkus.datasource.driver=org.postgresql.Driver \
+    -Dquarkus.datasource.username=bkd \
+    -Dquarkus.datasource.password=postgres
+
+run-dev-mariadb: ; ./mvnw compile quarkus\:dev \
+    -Dquarkus.datasource.url=jdbc:mariadb://localhost:3306/bkd \
+    -Dquarkus.datasource.driver=org.mariadb.jdbc.Driver \
+    -Dquarkus.hibernate-orm.dialect=org.hibernate.dialect.MariaDBDialect \
+    -Dquarkus.datasource.username=root \
+    -Dquarkus.datasource.password=mariadb
 
 run-native-h2: ; ./target/bkd-quarkus-1.0-SNAPSHOT-runner \
     -Dquarkus.datasource.url=jdbc\:h2\:mem\:bkd \
@@ -12,17 +25,12 @@ run-native-postgres: ; ./target/bkd-quarkus-1.0-SNAPSHOT-runner \
     -Dquarkus.datasource.username=bkd \
     -Dquarkus.datasource.password=postgres
 
-run-local-mariadb: ; ./mvnw compile quarkus\:dev \
+run-native-mariadb: ; ./target/bkd-quarkus-1.0-SNAPSHOT-runner \
     -Dquarkus.datasource.url=jdbc:mariadb://localhost:3306/bkd \
     -Dquarkus.datasource.driver=org.mariadb.jdbc.Driver \
+    -Dquarkus.hibernate-orm.dialect=org.hibernate.dialect.MariaDBDialect \
     -Dquarkus.datasource.username=root \
     -Dquarkus.datasource.password=mariadb
-
-run-local-postgres: ; ./mvnw compile quarkus\:dev \
-    -Dquarkus.datasource.url=jdbc\:postgresql\://localhost\:5432/bkd \
-    -Dquarkus.datasource.driver=org.postgresql.Driver \
-    -Dquarkus.datasource.username=bkd \
-    -Dquarkus.datasource.password=postgres
 
 run-docker-local-mariadb: ; docker run -i --rm -p 8080\:8080 \
     --env GREETING_MESSAGE=stuff \
