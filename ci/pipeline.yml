@@ -2,16 +2,32 @@ resources:
 - name: src-repo
   type: git
   source:
+    branch: working
+    private_key: ((git-repo.ssh_key))
+    uri: ((git-repo.uri))/bkd-quarkus.git
+  check_every: 5m
+- name: concourse-ci-repo
+  type: git
+  check_every: 5m
+  source:
+    uri: ((git-repo.uri))/concourse-ci.git
     branch: master
     private_key: ((git-repo.ssh_key))
-    uri: ((git-repo.mirror1_uri))/SRMIC/bkd-quarkus.git
-  check_every: 5m
 - name: docker
   type: docker-image
   source:
     repository: ((docker-registry.repo))/bkd-quarkus
     username: ((docker-registry.username))
     password: ((docker-registry.password))
+- name: cloud-foundry-training
+  type: cf
+  source:
+    api: ((pcf-training-environment.api))
+    username: ((pcf-training-environment.username))
+    password: ((pcf-training-environment.password))
+    organization: ((pcf-training-environment.organization))
+    space: ((pcf-training-environment.space))
+    skip_cert_check: true
 
 jobs:
 - name: build-native-docker
@@ -27,4 +43,37 @@ jobs:
     params:
       build: .
       dockerfile: src-repo/src/main/docker/Dockerfile.concourse
-      tag_as_latest: false
+      tag_as_latest: true
+
+- name: deploy-to-training
+  serial: true
+  serial_groups: [deploy]
+  plan:
+  - aggregate:
+    - get: src-repo
+      trigger: true
+      passed: [build-native-docker]
+    - get: concourse-ci-repo
+  - task: generate-manifest
+    file: concourse-ci-repo/ci/tasks/generate-manifest.yml
+    params:
+      MF_NAME: bkd-quarkus
+      MF_DOCKER_IMAGE: ((docker-registry.repo))/bkd-quarkus:latest
+      MF_ROUTES: [ route: bkd-quarkus.((pcf-training-environment.app_domain)) ]
+      MF_TIMEOUT: ((bkd-quarkus.timeout))
+      MF_MEMORY: ((bkd-quarkus.memory))
+      MF_INSTANCES: ((bkd-quarkus.instances))
+      MF_DISK_QUOTA: ((bkd-quarkus.disk_quota))
+      MF_HEALTH_CHECK_HTTP_ENDPOINT: ((bkd-quarkus.health_check_endpoint))
+      MF_HEALTH_CHECK_TYPE: ((bkd-quarkus.health_check_type))
+      MF_ENV:
+        GREETING_MESSAGE: ((bkd-quarkus.greeting))
+        QUARKUS_DATASOURCE_DRIVER: ((bkd-quarkus.quarkus_datasource_driver))
+        QUARKUS_DATASOURCE_URL: ((bkd-quarkus.quarkus_datasource_url))
+        QUARKUS_DATASOURCE_USERNAME: ((bkd-quarkus.quarkus_datasource_username))
+        QUARKUS_DATASOURCE_PASSWORD: ((bkd-quarkus.quarkus_datasource_password))
+        QUARKUS_HIBERNATE-ORM_DIALECT: ((bkd-quarkus.quarkus_hibernate_orm_dialect))
+        QUARKUS_HIBERNATE-ORM_DATABASE_GENERATION: ((bkd-quarkus.database_generation))
+  - put: cloud-foundry-training
+    params:
+      manifest: task-output/manifest.yml
