@@ -53,10 +53,12 @@ run-native-postgres: ; ./target/bkd-quarkus-1.0-SNAPSHOT-runner \
 #
 # docker native
 #
+# Be sure and update the IP address to the IP of the machine you are running on (not localhost or 127.0.0.1)
+#
 run-docker-local-postgres: ; docker run -i --rm -p 8080\:8080 \
     --env GREETING_MESSAGE=stuff \
     --env QUARKUS_DATASOURCE_DRIVER=org.postgresql.Driver \
-    --env QUARKUS_DATASOURCE_URL=jdbc\:postgresql\://10.55.49.177\:5432/bkd \
+    --env QUARKUS_DATASOURCE_URL=jdbc\:postgresql\://192.168.1.226\:5432/bkd \
     --env QUARKUS_DATASOURCE_USERNAME=bkd \
     --env QUARKUS_DATASOURCE_PASSWORD=postgres \
     harbor-docker-registry-dev.gp2.axadmin.net/identifix_cms/bkd-quarkus\:latest
