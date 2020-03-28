@@ -1,3 +1,5 @@
+rmi: ; docker rmi harbor-docker-registry-dev.gp2.axadmin.net/identifix_cms/bkd-quarkus
+
 #
 # Development
 #
@@ -82,7 +84,7 @@ run-docker-local-mariadb: ; docker run -i --rm -p 8080\:8080 \
     --env GREETING_MESSAGE=stuff \
     --env QUARKUS_DATASOURCE_DRIVER=org.mariadb.jdbc.Driver \
     --env QUARKUS_HIBERNATE-ORM_DIALECT=org.hibernate.dialect.MariaDBDialect \
-    --env QUARKUS_DATASOURCE_URL=jdbc\:mariadb\://10.30.4.62\:3306/bkd \
+    --env QUARKUS_DATASOURCE_URL=jdbc\:mariadb\://host.docker.internal\:3306/bkd \
     --env QUARKUS_DATASOURCE_USERNAME=root \
     --env QUARKUS_DATASOURCE_PASSWORD=mariadb \
     harbor-docker-registry-dev.gp2.axadmin.net/identifix_cms/bkd-quarkus\:latest
