@@ -4,8 +4,8 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: oracle/graalvm-ce
-    tag: 1.0.0-rc16
+    repository: quay.io/quarkus/centos-quarkus-native-image
+    tag: graalvm-1.0.0-rc14
 
 inputs:
 - name: src-repo

@@ -38,7 +38,7 @@ public class OemController {
     public Oem findByName(@QueryParam("name") String name) {
         Oem oem = Oem.findByName(name);
         if (oem == null) {
-            throw new WebApplicationException("Oem with id of " + name + " does not yet exist.", 404);
+            throw new WebApplicationException("Oem with id of " + name + " does not exist.", 404);
         }
         return oem;
     }
